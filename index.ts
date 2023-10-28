@@ -3,7 +3,10 @@ import router from './routes/router';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 
-const server= new Server();
+// const server= new Server();
+// singleton - Asegurandonos de que tengamos una unica intancia del Socket
+const server= Server.instance;
+
 
 // body-parser
 server.app.use( bodyParser.urlencoded({ extended: true }) );
