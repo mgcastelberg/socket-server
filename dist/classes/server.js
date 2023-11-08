@@ -50,6 +50,11 @@ class Server {
         console.log('escuchando conexiones');
         this.io.on('connection', (cliente) => {
             console.log('Cliente conectado');
+            console.log(cliente.id);
+            // Conectar cliente
+            miSocket.conectarCliente(cliente);
+            // Configurar usuario
+            miSocket.configurarUsuario(cliente, this.io);
             // Mensajes
             miSocket.mensaje(cliente, this.io);
             // Desconectar
