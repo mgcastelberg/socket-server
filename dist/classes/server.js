@@ -52,13 +52,15 @@ class Server {
             console.log('Cliente conectado');
             console.log(cliente.id);
             // Conectar cliente
-            miSocket.conectarCliente(cliente);
+            miSocket.conectarCliente(cliente, this.io);
             // Configurar usuario
             miSocket.configurarUsuario(cliente, this.io);
+            // Obtener usuarios activos
+            miSocket.obtenerUsuarios(cliente, this.io);
             // Mensajes
             miSocket.mensaje(cliente, this.io);
             // Desconectar
-            miSocket.desconectar(cliente);
+            miSocket.desconectar(cliente, this.io);
         }); // es para escuchar u conection
     }
     start(callback) {

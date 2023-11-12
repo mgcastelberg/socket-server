@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
 const server_1 = __importDefault(require("../classes/server"));
+const socket_1 = require("../sockets/socket");
 const router = (0, express_1.Router)();
 // API ENDPOINT SEERVIDOR REST TRADICIONAL
 router.get('/mensajes', (req, res) => {
@@ -47,6 +48,36 @@ router.post('/mensajes/:id', (req, res) => {
         cuerpo,
         de,
         id
+    });
+});
+// Obtener todos los ids de los usuarios
+router.get('/usuarios', (req, res) => {
+    const server = server_1.default.instance;
+    server.io.allSockets().then((clientes) => {
+        res.json({
+            ok: true,
+            clientes: Array.from(clientes)
+        });
+    }).catch((err) => {
+        res.json({
+            ok: false,
+            err
+        });
+    });
+});
+// Obtener todos los ids de los usuarios y sus nombres desde node
+router.get('/usuarios/detalle', (req, res) => {
+    const server = server_1.default.instance;
+    server.io.allSockets().then((clientes) => {
+        res.json({
+            ok: true,
+            clientes: socket_1.usuariosConectados.getLista()
+        });
+    }).catch((err) => {
+        res.json({
+            ok: false,
+            err
+        });
     });
 });
 exports.default = router;
